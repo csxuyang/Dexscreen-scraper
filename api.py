@@ -18,9 +18,9 @@ def generate_sec_websocket_key():
     key = base64.b64encode(random_bytes).decode('utf-8')
     return key
 
-async def fetch_pairs_with_filter(rank_by_key: str = "trendingScoreH6"):
+async def fetch_pairs_with_filter(rank_by_key: str = "trendingScoreH6", page: int = 1):
     try:
-        pairs = await connect_working(rank_by_key)
+        pairs = await connect_working(rank_by_key, page)
         return pairs
     except Exception as e:
         print(f"Connection error: {e}")

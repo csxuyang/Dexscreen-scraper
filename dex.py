@@ -158,13 +158,11 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
                     print(f"Target: {solana_count} pairs")
                     
                     pairs = extract_pairs_working(message)
-                    meteora_labels = len([x for x in pairs if x['labels'] == 'METEORA'])
-                    print(f"Meteora labels: {meteora_labels}")
-                    if meteora_labels > 0:
-                        print(f"Meteora labels: {meteora_labels}")
-                        return pairs
+                    pairs = [x for x in pairs if x['labels'] != 'METEORA']
                     if pairs:
-                        return pairs                        
+                        return pairs
+                    else:
+                        return []
             except Exception as e:
                 print(f"Error: {e}")
                 continue

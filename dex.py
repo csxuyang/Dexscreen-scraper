@@ -50,7 +50,6 @@ def extract_pairs_working(data):
     
     for i, section in enumerate(sections):
         try:
-            # Bỏ qua sections quá ngắn
             if len(section) < 20:
                 continue
                 
@@ -76,34 +75,34 @@ def extract_pairs_working(data):
                 pair['labels'] = 'METEORA'
                 after_label = section
             
-            all_addresses = re.findall(r'[A-Za-z0-9]{44}', after_label)
+            # all_addresses = re.findall(r'[A-Za-z0-9]{44}', after_label)
             
-            addresses = []
-            for addr in all_addresses:
-                if addr not in addresses and len(addr) == 44:
-                    addresses.append(addr)
+            # addresses = []
+            # for addr in all_addresses:
+            #     if addr not in addresses and len(addr) == 44:
+            #         addresses.append(addr)
             
-            # Cần ít nhất 2 addresses
-            if len(addresses) >= 2:
-                pair['pool'] = addresses[0]
-                pair['quote'] = addresses[1]
+            # # Cần ít nhất 2 addresses
+            # if len(addresses) >= 2:
+            #     pair['pool'] = addresses[0]
+            #     pair['quote'] = addresses[1]
+            pair['pool'] = after_label[:44]
+            pair['quote'] = after_label[45:89]
                 
                 # Base token strategy đơn giản:
                 # 1. Nếu có SOL address, dùng SOL
                 # 2. Nếu có USDC address, dùng USDC  
                 # 3. Nếu có address thứ 3, dùng address thứ 3
                 
-                sol_address = 'So11111111111111111111111111111111111111112'
-                usdc_address = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1'
+            sol_address = 'So11111111111111111111111111111111111111112'
+            usdc_address = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1'
                 
-                if sol_address in section:
-                    pair['base'] = sol_address
-                elif usdc_address in section:
-                    pair['base'] = usdc_address
-                elif len(addresses) > 2:
-                    pair['base'] = addresses[2]
+            if sol_address in section:
+                pair['base'] = sol_address
+            elif usdc_address in section:
+                pair['base'] = usdc_address
                 
-                pairs.append(pair)
+            pairs.append(pair)
                 
         except Exception as e:
             continue
@@ -158,11 +157,10 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
                     print(f"Target: {solana_count} pairs")
                     
                     pairs = extract_pairs_working(message)
-                    pairs = [x for x in pairs if x['labels'] != 'METEORA']
-                    if pairs:
+                    # pairs = [x for x in pairs if x['labels'] != 'METEORA']
+                    if len(pairs) > 0:
                         return pairs
-                    else:
-                        return []
+                
             except Exception as e:
                 print(f"Error: {e}")
                 continue

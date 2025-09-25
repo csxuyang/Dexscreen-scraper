@@ -115,9 +115,7 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
     params = {
         "rankBy[key]": rank_by_key,
         "rankBy[order]": "desc",
-        "filters[chainIds][0]": "solana",
-        "filters[dexIds][0]": "meteora",
-        "filters[dexIds][1]": "meteoradbc"
+        "filters[chainIds][0]": "solana"
     }
     uri = f"{base_uri}?{urllib.parse.urlencode(params)}"
 

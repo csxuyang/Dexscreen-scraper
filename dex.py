@@ -132,7 +132,7 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
         "Sec-WebSocket-Key": generate_sec_websocket_key()
     }
 
-    print("🚀 WORKING PARSER - Đơn giản và hiệu quả...")
+    print("🚀 WORKING PARSER...")
     
     try:
         session = AsyncSession(headers=headers)
@@ -157,7 +157,7 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
                     print(f"Target: {solana_count} pairs")
                     
                     pairs = extract_pairs_working(message)
-                    # pairs = [x for x in pairs if x['labels'] != 'METEORA']
+
                     if len(pairs) > 0:
                         return pairs
                 
@@ -172,4 +172,5 @@ async def connect_working(rank_by_key: str = "trendingScoreH6", page: int = 1):
         print(f"Connection error: {e}")
 
 if __name__ == "__main__":
-    asyncio.run(connect_working())
+    pairs = asyncio.run(connect_working())
+    print(pairs)

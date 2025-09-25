@@ -26,7 +26,8 @@ def is_valid_solana_address_simple(address):
 
 def extract_pairs_working(data):
     """Parser hoạt động - đơn giản và không quá strict"""
-    
+
+    print(data)
     # Find pairs marker
     pairs_pos = data.find(b'pairs')
     if pairs_pos == -1:
